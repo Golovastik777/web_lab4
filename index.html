@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-cloud-sun"></i> Прогноз погоды</h1>
+            <div class="header-controls">
+                <button id="themeToggleBtn" class="btn btn-secondary">
+                    <i class="fas fa-moon"></i> Ночной режим
+                </button>
+                <button id="refreshBtn" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Обновить
+                </button>
+                <button id="addCityBtn" class="btn btn-secondary">
+                    <i class="fas fa-plus"></i> Добавить город
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="cities-container">
+                <div id="citiesList" class="cities-list"></div>
+                
+                <div id="weatherContainer" class="weather-container">
+                    <div id="loadingState" class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Загрузка данных о погоде...</p>
+                    </div>
+                    
+                    <div id="errorState" class="error-state hidden">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p id="errorMessage">Произошла ошибка при загрузке данных</p>
+                    </div>
+                    
+                    <div id="weatherContent" class="weather-content hidden">
+                        <div class="current-weather">
+                            <div class="location-info">
+                                <h2 id="locationName">Текущее местоположение</h2>
+                                <p id="currentDate" class="date"></p>
+                            </div>
+                            <div class="weather-main">
+                                <div class="temperature">
+                                    <span id="currentTemp">--</span>
+                                    <span class="temp-unit">°C</span>
+                                </div>
+                                <div class="weather-details">
+                                    <div class="weather-icon">
+                                        <i id="weatherIcon" class="fas fa-sun"></i>
+                                    </div>
+                                    <div class="weather-description">
+                                        <p id="weatherDesc">--</p>
+                                        <p>Ощущается как <span id="feelsLikeTemp">--</span>°C</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="additional-info">
+                                <div class="info-item">
+                                    <i class="fas fa-wind"></i>
+                                    <div>
+                                        <div class="info-label">Ветер</div>
+                                        <div class="info-value"><span id="windSpeed">--</span> м/с</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-tint"></i>
+                                    <div>
+                                        <div class="info-label">Влажность</div>
+                                        <div class="info-value"><span id="humidity">--</span>%</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <div>
+                                        <div class="info-label">Давление</div>
+                                        <div class="info-value"><span id="pressure">--</span> гПа</div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-eye"></i>
+                                    <div>
+                                        <div class="info-label">Видимость</div>
+                                        <div class="info-value"><span id="visibility">--</span> км</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="forecast-section">
+                            <h3>Прогноз на 3 дня</h3>
+                            <div id="forecastDays" class="forecast-days"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="addCityModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Добавить город</h2>
+                    <button id="closeModalBtn" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cityInput">Название города:</label>
+                        <input type="text" id="cityInput" placeholder="Начните вводить название города...">
+                        <div id="suggestionsContainer" class="suggestions-container"></div>
+                        <div id="cityError" class="error-message hidden"></div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button id="confirmAddCityBtn" class="btn btn-primary">Добавить</button>
+                        <button id="cancelAddCityBtn" class="btn btn-secondary">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="locationPermissionModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Доступ к геолокации</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Разрешить доступ к вашему местоположению для автоматического определения погоды?</p>
+                    <div class="modal-buttons">
+                        <button id="allowLocationBtn" class="btn btn-primary">Разрешить</button>
+                        <button id="denyLocationBtn" class="btn btn-secondary">Отклонить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
